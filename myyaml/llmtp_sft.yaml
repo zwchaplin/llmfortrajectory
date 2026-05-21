@@ -1,0 +1,50 @@
+### model
+model_name_or_path: /root/yijia-tmp/LlamaFactory/models/Qwen3-4B-Base
+stage: sft
+dataset: llmtp
+template: default
+do_train: true # true: 训练 false: 评估
+# do_predict: true
+finetuning_type: lora
+
+### lora
+lora_rank: 8
+lora_target: all
+cutoff_len: 2048
+max_samples: 5000
+preprocessing_num_workers: 16
+dataloader_num_workers: 4
+learning_rate: 1.0e-4
+num_train_epochs: 4
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+
+### output
+output_dir: saves/llmtp/lora/sft
+logging_steps: 10
+save_steps: 500
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: none  # choices: [none, wandb, tensorboard, swanlab, mlflow]
+
+### train
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8
+bf16: true
+ddp_timeout: 180000000
+resume_from_checkpoint: null
+
+### eval
+eval_dataset: eval_llmtp
+per_device_eval_batch_size: 1
+eval_strategy: steps
+eval_steps: 250
+# predict_with_generate: true
+
+
+### swanlab
+use_swanlab: true
+swanlab_project: llamafactory
+swanlab_run_name: Qwen3-4B-Base-LLMTP-SFT
+swanlab_api_key: gh4SNB9tRhE93hmecbRYQ

@@ -1,0 +1,36 @@
+# The batch generation can be SLOW using this config.
+# For faster inference, we recommend to use `scripts/vllm_infer.py`.
+
+### model
+model_name_or_path: /root/yijia-tmp/LlamaFactory/models/qwen3-4b-instruct
+# adapter_name_or_path: /root/yijia-tmp/LlamaFactory/saves/llmtp/lora/sft
+template: default
+
+### method
+stage: sft
+do_predict: true
+finetuning_type: lora
+
+### dataset
+eval_dataset: eval_llmtp
+cutoff_len: 2048
+max_samples: 2000
+overwrite_cache: true
+preprocessing_num_workers: 16
+dataloader_num_workers: 4
+
+### output
+output_dir: saves/llmtp/lora/base
+overwrite_output_dir: true
+report_to: none  # choices: [none, wandb, tensorboard, swanlab, mlflow]
+
+### eval
+per_device_eval_batch_size: 4
+predict_with_generate: true
+ddp_timeout: 180000000
+
+### swanlab
+use_swanlab: true
+swanlab_project: llamafactory
+swanlab_run_name: Qwen3-4B-Base-LLMTP-BASE
+swanlab_api_key: gh4SNB9tRhE93hmecbRYQ
